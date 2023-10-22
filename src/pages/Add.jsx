@@ -14,7 +14,7 @@ const Add = () => {
   const navigation = useNavigate();
   let schema = yup.object({
     name: yup.string().trim().required(),
-    websiteUrl: yup.string().trim().required(),
+    websiteUrl: yup.string().url().required(),
     country: yup.string().trim().required(),
   });
   const { values, handleSubmit, handleChange, setFieldValue, errors, touched } =

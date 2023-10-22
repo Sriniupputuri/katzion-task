@@ -6,33 +6,19 @@ import Add from "./pages/Add";
 import Edit from "./pages/Edit";
 import { useState } from "react";
 import MyContext from "./components/MyContext";
-import { useEffect } from "react";
-
-const colors = ['#FF5733', '#33FF57', '#5733FF', '#FF57A3', '#A3FF57', '#57A3FF']; // Add more colors as needed
-
-function getRandomColor(previousColors) {
-  let availableColors = colors.filter(color => !previousColors.includes(color));
-  if (availableColors.length === 0) {
-    // If all colors have been used, reset the list of previous colors
-    previousColors.length = 0;
-    availableColors = colors;
-  }
-  const randomIndex = Math.floor(Math.random() * availableColors.length);
-  const selectedColor = availableColors[randomIndex];
-  previousColors.push(selectedColor);
-  return selectedColor;
-}
 
 function App() {
   let [mainData, setMainData] = useState([]);
 
-  const [backgroundColor, setBackgroundColor] = useState('#FFFFFF'); // Initial background color
-  const [previousColors, setPreviousColors] = useState([]);
-
-  useEffect(() => {
-    const newColor = getRandomColor(previousColors);
-    setBackgroundColor(newColor);
-  }, [previousColors]);
+  const [backgroundColor, setBackgroundColor] = useState(getRandomColor());
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
 
   return (
     <MyContext.Provider value={{ mainData, setMainData }}>
